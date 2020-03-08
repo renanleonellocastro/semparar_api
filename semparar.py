@@ -57,10 +57,11 @@ class SemParar:
         month1 = self.month_number_from_any_number(datetime.now().month - 3) 
         month2 = self.month_number_from_any_number(datetime.now().month - 2) 
         month3 = self.month_number_from_any_number(datetime.now().month - 1) 
-        self.__invoice_numbers = {'%d'%month1: '', '%d'%month2: '', '%d'%month3: ''}
+        month4 = datetime.now().month
+        self.__invoice_numbers = {'%d'%month1: '', '%d'%month2: '', '%d'%month3: '', '%d'%month4:''}
         self.__invoice = []
         self.__invoice_total_price = None
-        self.__month = datetime.now().month
+        self.__month = None
         self.set_log_level(debug)
 
 # Get class member "cpf"
@@ -225,16 +226,18 @@ class SemParar:
 #----------------------------------------------------------------------------------------------------------------------
     @property
     def invoice_numbers(self):
-        logging.debug('Getting the last three invoice numbers...')
+        logging.debug('Getting the last four invoice numbers...')
         month1 = self.month_number_from_any_number(datetime.now().month - 3) 
         month2 = self.month_number_from_any_number(datetime.now().month - 2) 
         month3 = self.month_number_from_any_number(datetime.now().month - 1) 
+        month4 = datetime.now().month
         if(not self.__logged):
             self.__login()
 
         if (self.__invoice_numbers['%d'%month1] != ''):
-            logging.debug('Returning the invoice numbers: %s %s %s!', self.__invoice_numbers['%d'%month1],
-                self.__invoice_numbers['%d'%month2], self.__invoice_numbers['%d'%month3])
+            logging.debug('Returning the invoice numbers: %s %s %s %s!', self.__invoice_numbers['%d'%month1],
+                self.__invoice_numbers['%d'%month2], self.__invoice_numbers['%d'%month3], 
+                self.__invoice_numbers['%d'%month4])
             return self.__invoice_numbers
 
         header = {'content-type': 'application/json;charset=UTF-8'}
@@ -250,6 +253,11 @@ class SemParar:
             self.__invoice_numbers['%d'%month1] = result[0]['numeroFatura']
             self.__invoice_numbers['%d'%month2] = result[1]['numeroFatura']
             self.__invoice_numbers['%d'%month3] = result[2]['numeroFatura']
+            if (len(result) == 4):
+                self.__invoice_numbers['%d'%month4] = result[3]['numeroFatura']
+            else:
+                self.__invoice_numbers['%d'%month4] = None
+
         except:
             logging.error('Failed to get the last invoice numbers!')
             raise FailedToFillInvoiceNumbers
@@ -288,11 +296,12 @@ class SemParar:
             'dataInicialUnix':None, 'dataFinalUnix':None, 'placaVeiculo':None}
         properties = []
         try:
-            if month != datetime.now().month:
+            if (month == None or (month == datetime.now().month and \
+                 self.invoice_numbers['%d'%datetime.now().month] == None)):
+                data['statusItemFaturamento'] = 4
+            else:
                 data['codigoFatura'] = self.invoice_numbers['%d'%month]
                 data['statusItemFaturamento'] = None
-            else:
-                data['statusItemFaturamento'] = 4
             
             while True:
                 self.__web.executePost(self.INVOICE_URL, data, True, header)
@@ -360,17 +369,17 @@ class SemParar:
 # Change the month of the invoice
 #----------------------------------------------------------------------------------------------------------------------
     def change_invoice_month(self, month):
-        logging.debug('Changing the month from %d to %d...', self.__month, month)
+        logging.debug('Changing the month to %d...', month)
         if(not self.__logged):
             self.__login()
 
         try:
-            if month == datetime.now().month or self.invoice_numbers['%d'%month]:
+            if month == None or month == datetime.now().month or self.invoice_numbers['%d'%month]:
                 self.__month = month
                 self.__invoice = []
                 self.__invoice_total_price = None
         except:
-            logging.error('Failed to change month from %d to %d', self.__month, month)
+            logging.error('Failed to change month to %d', month)
             raise InvalidMonth
 
         logging.debug('The current invoice month is: %d', self.__month)
