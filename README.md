@@ -1,4 +1,6 @@
-# SemParar API ![status](images/working.png)
+# SemParar API 
+
+![status](images/working.png)
 
 A python library to consult your SemParar data such as invoice, invoice total price, registered bank account, etc.
 
