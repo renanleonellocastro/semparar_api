@@ -14,8 +14,8 @@ To use this library, it is necessary to install the following packages:
 
 ## Library Usage
 
-To use this library you need to know your registered  CPF and PASSWORD in the SemParar's system.
-You can debug the library using the *"debug=True"* option in the library constructor.
+To use this library you need to know your registered  **CPF** and **PASSWORD** in the SemParar's system.
+You can debug the library using the "**debug=True**" option in the library constructor.
 
 Using this library you can get the following information from your SemParar's toll system:
 - Name
@@ -178,22 +178,22 @@ optional arguments:
 ```
 ### Configuration File
   
-It is necessary to fill your credentials on the sample.xml file to be able to connect to the
+It is necessary to fill your credentials on the **sample.xml** file to be able to connect to the
 SemParar's tolls system.
 
-Substitute the following tags on 'sample_app/sample.xml' in your local directory:
+Substitute the following tags on "**sample_app/sample.xml**" in your local directory:
 ```xml
  - <cpf>32167592303</cpf> -> <cpf>xxxxxxxxxxx</cpf> (xxxxxxxxxxx = your cpf number)
  - <password>exemplo123</password>-> <password>xxxx</password> (xxxx = your SemParar's password)
 ```
 ### Execution
 
-To execute the sample above to get the invoice extract, write the following in your terminal:
+To execute the sample above to get the **invoice extract**, write the following in your terminal:
 ```sh
 python2 sample_app.py -e
 ```
 
-To execute the sample above to get the invoice total price, write the following in your terminal:
+To execute the sample above to get the **invoice total price**, write the following in your terminal:
 ```sh
 python2 sample_app.py -t
 ```
