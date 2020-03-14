@@ -50,7 +50,7 @@ class SemParar:
         self.__blocked = False
         self.__vehicle_name = ''
         self.__vehicle_plate_number = ''
-        self.__bank_account = {'bank_name':'', 'bank_unity_name':'', 'bank_unity_number':'',
+        self.__bank_account = {'bank_name':'', 'bank_unit_name':'', 'bank_unit_number':'',
                              'account_number':'', 'account_digit':''}
         self.__address = {'city':'', 'state':'', 'place_name':'', 'place_number':'',
                         'neighborhood':'', 'zip_code':''}
@@ -329,8 +329,8 @@ class SemParar:
         self.__name = properties['usuario'] 
         self.__due_date = properties['dadosFinanceiros']['diaVencimentoConta']
         self.__bank_account['bank_name'] = properties['dadosFinanceiros']['contaCorrente']['banco']['nome']
-        self.__bank_account['bank_unity_name'] = properties['dadosFinanceiros']['contaCorrente']['nomeAgencia']
-        self.__bank_account['bank_unity_number'] = properties['dadosFinanceiros']['contaCorrente']['identificadorAgencia']
+        self.__bank_account['bank_unit_name'] = properties['dadosFinanceiros']['contaCorrente']['nomeAgencia']
+        self.__bank_account['bank_unit_number'] = properties['dadosFinanceiros']['contaCorrente']['identificadorAgencia']
         self.__bank_account['account_number'] = properties['dadosFinanceiros']['contaCorrente']['numeroConta']
         self.__bank_account['account_digit'] = properties['dadosFinanceiros']['contaCorrente']['digito']
         self.__address = {'city':'', 'state':'', 'place_name':'', 'place_number':'',
