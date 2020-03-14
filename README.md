@@ -15,7 +15,7 @@ To use this library, it is necessary to install the following packages:
 ## Library Usage
 
 To use this library you need to know your registered  CPF and PASSWORD in the SemParar's system.
-You can debug the library using the 'debug=True' option in the library constructor.
+You can debug the library using the *"debug=True"* option in the library constructor.
 
 Using this library you can get the following information from your SemParar's toll system:
 - Name
