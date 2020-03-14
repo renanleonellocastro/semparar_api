@@ -157,7 +157,7 @@ for month in [02, 01, 12]:
 
 ## Sample Application (sample_app.py)
 
-In this repository there is a 'sample_app' directory that contains a simple example on how
+In this repository there is a "**sample_app**" directory that contains a simple example on how
 to use the 'SemParar API' library.
 
 ### Usage
