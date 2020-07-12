@@ -352,17 +352,20 @@ class SemParar:
 #----------------------------------------------------------------------------------------------------------------------
     def __fill_user_extract_properties(self, properties):
         logging.debug('Filling user %s extract properties...', self.cpf)
-        self.__vehicle_name = properties[0]['itemFaturas'][0]['modeloVeiculo']
-        self.__vehicle_plate_number = properties[0]['itemFaturas'][0]['placaVeiculo']
-        self.__invoice_total_price = 0.0
-        self.__invoice = []
-        for prop in properties:
-            for invoice in prop['itemFaturas']:
-                description = invoice['descricaoItemFatura'].encode('utf-8')
-                place_name = invoice['nomePontoUso'].encode('utf-8') + "/" + invoice['nomePraca'].encode('utf-8')
-                value = invoice['valorBrutoFatura']
-                self.__invoice.append({'description':description, 'place_name':place_name, 'value':value})
-                self.__invoice_total_price += value
+        if len(properties) != 0:
+            self.__vehicle_name = properties[0]['itemFaturas'][0]['modeloVeiculo']
+            self.__vehicle_plate_number = properties[0]['itemFaturas'][0]['placaVeiculo']
+            self.__invoice_total_price = 0.0
+            self.__invoice = []
+            for prop in properties:
+                for invoice in prop['itemFaturas']:
+                    description = invoice['descricaoItemFatura'].encode('utf-8')
+                    place_name = invoice['nomePontoUso'].encode('utf-8') + "/" + invoice['nomePraca'].encode('utf-8')
+                    value = invoice['valorBrutoFatura']
+                    self.__invoice.append({'description':description, 'place_name':place_name, 'value':value})
+                    self.__invoice_total_price += value
+        else:
+            self.__invoice_total_price = 0.0
 
         logging.debug('User %s extract properties filled!', self.cpf)
 
